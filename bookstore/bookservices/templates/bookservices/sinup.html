@@ -1,0 +1,30 @@
+{% extends 'bookservices/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'bookservices/css/sin-up-in.css' %}">
+<div class="sign-up-form">
+  <img src="{% static 'bookservices/images/user.png' %}">
+  <h1>Sign Up Now</h1>
+  <form action="{% url 'sinup' %}" method="POST">
+    {% csrf_token %}
+      <div class="name">
+          <input type="name" name="first_name" id="" placeholder="First Name">
+          <input type="name" name="last_name" id="" placeholder="Last Name">
+      </div>
+      <input type="email" name="email" class="input-box" placeholder="Email">
+      <input type="name" name="phone" class="input-box" placeholder="Phone">
+      <input type="password" name="password1" class="input-box" placeholder="password">
+      <input type="password" name="password2" class="input-box" placeholder="Confirm password">
+      <p><span><input type="checkbox"></span> agree to the terms of services</p>
+      <button type="submit" class="signup-btn">Sign up</button>
+      {% if error %}
+      <p><span>{{error}}</span></p>
+      {% endif %}
+      <hr>
+      <p class="or">OR</p>
+      <button type="button" class="google-btn">Login with Google</button>
+      <p>Do you have an account ? <a href="#">Sign in</a></p>
+     
+  </form>
+</div>
+{% endblock %}

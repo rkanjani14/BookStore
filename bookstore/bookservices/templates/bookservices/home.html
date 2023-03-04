@@ -1,0 +1,23 @@
+{% extends "bookservices/base.html" %}
+{% block title %}rakesh{% endblock %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row g-4">
+        {% for book in books %}
+        <div class="col-sm-2 d-flex align-items-stretch">
+            <div class="card">
+                <a href="#"><img src="{{book.image.url}}" class="card-img-top" alt="..."></a>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{book.title}}</h5>
+                    <h6 class="card-title">{{book.author.name}}</h6>
+                    <h5 class="card-title">{{book.price}}</h5>
+                    <a href="#"  data-book="{{book.id}}" data-action="add" class="btn btn-primary update-cart-home">Add to card</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %} 
+    </div>
+</div>
+
+{% endblock %}

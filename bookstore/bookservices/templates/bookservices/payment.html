@@ -1,0 +1,41 @@
+{% extends "bookservices/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+   <h1 class="text-center m-5">Please do not refresh the page </h1>
+</div>
+<form method="POST">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    var options = {
+        key : "{{razorpay_key_id}}",
+        amount: "{{amount}}",
+        currency: "{{currency}}",
+        name: "Rakesh BookStore",
+        order_id : "{{razorpay_order_id}}",
+        callback_url : "{{callback_url}}",
+        };
+        var rzp1 = new Razorpay(options);
+
+        rzp1.on('payment.failed', function (response){
+            data = { "payment_id":response.error.metadata.payment_id,"order_id":response.error.metadata.order_id}
+            $.ajax({
+              type: "POST",
+              url: "/callback_url",
+              headers: {'X-CSRFToken': csrftoken},
+              data: JSON.stringify(data),
+              dataType: 'json',
+              success: function(data){
+               let delay = 5000;
+                let url = "{% url 'home' %}";
+                setTimeout(function(){
+                    location = url;
+                },10000)
+
+              }
+            });
+            });
+            rzp1.open();
+    </script>
+</form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "bookservices/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center m-5">Payment done successfully Redirecting.... </h1>
+</div>
+<script>
+let delay = 5000;
+let url = "{% url 'home' %}";
+setTimeout(function(){
+    location = url;
+},5000)
+</script>
+{% endblock %}

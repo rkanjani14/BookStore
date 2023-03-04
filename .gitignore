@@ -1,0 +1,5 @@
+**/env
+**/.vscode
+**/.idea
+*.sqlite3
+ngrok.exe
