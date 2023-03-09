@@ -41,7 +41,6 @@ function updateCart(bookId,cartNumber,action){
       data: JSON.stringify(data),
       dataType: 'json',
       success: function(data){
-        alert('success')
         location.reload();
       }
     });

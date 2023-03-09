@@ -17,7 +17,13 @@ razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KE
 
 def home(request):
     books = Book.objects.all()
-    context = {'books': books}
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(user=request.user)
+        order = Order.objects.get_or_create(customer=customer, complete=PaymentStatus.PENDING)
+        total_number_cart = order[0].total_number_cart
+    else:
+        total_number_cart = 0
+    context = {'books': books, 'total_number_cart': total_number_cart}
     return render(request, "bookservices/home.html", context)
 
 
