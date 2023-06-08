@@ -10,6 +10,7 @@ from .models import *
 import razorpay
 from django.conf import settings
 from bookservices.constants import PaymentStatus
+
 # Create your views here.
 
 razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
@@ -72,6 +73,7 @@ def logout(request):
 
 def cart(request):
     user_name = request.user.username
+    print(request.user.first_name)
     user = User.objects.get(username=user_name)
     print("user11", user)
     customer = Customer.objects.get(user=user)
@@ -156,7 +158,7 @@ def checkout(request):
             order.razorpay_order_id = razorpay_order['id']
             order.save()
 
-        callback_url='/callback_url'
+        callback_url = '/callback_url'
         context = {
             "razorpay_order_id": razorpay_order['id'],
             "razorpay_key_id": settings.RAZOR_KEY_ID,
@@ -173,7 +175,6 @@ def checkout(request):
     order.dues = total_amount_cart
     order.save()
     total_number_cart = order.total_number_cart
-
 
     context = {
         "cart_items": cart_items,
@@ -213,10 +214,17 @@ def callback_url(request):
                 order.save()
                 return render(request, "bookservices/failure.html")
         else:
-            razorpay_payment_id = json.loads(request.body)['payment_id']
-            razorpay_order_id = json.loads(request.body)['order_id']
+            try:
+                razorpay_payment_id = json.loads(request.body)['payment_id']
+                razorpay_order_id = json.loads(request.body)['order_id']
+            except:
+                razorpay_payment_id = "None"
+                user = User.objects.filter(email = request.user).first()
+                customer = Customer.objects.filter(user = user).first()
+                order = Order.objects.get(customer=customer, complete=PaymentStatus.PENDING)
+                razorpay_order_id = order.razorpay_order_id
             order = Order.objects.get(razorpay_order_id=razorpay_order_id)
             order.razorpay_payment_id = razorpay_payment_id
             order.complete = PaymentStatus.FAILURE
             order.save()
-            return render(request, "bookservices/failure.html")
+            return redirect("/checkout/")
