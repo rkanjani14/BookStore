@@ -24,11 +24,6 @@ SECRET_KEY = 'django-insecure-+vsy@uoi%2)x$me1oousq^-_hmijgrhz&n_&gu)4r!lm4z%8fq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = [
-#     "127.0.0.1",
-#     "b9ec-2405-204-3129-abee-406e-4d07-adfa-63e6.in.ngrok.io",
-#     "localhost",
-# ]
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -137,5 +132,5 @@ AUTHENTICATION_BACKENDS = (
 RAZOR_KEY_ID = "rzp_test_qPgqbKIjFjUoFh"
 RAZOR_KEY_SECRET = "i9rWLvCSGEnUVloA6dHj8aJv"
 
-APPEND_SLASH = False
-CSRF_TRUSTED_ORIGINS = ['https://3449-2409-4050-dc0-2a83-1853-ce36-f980-6c2d.in.ngrok.io']
+# APPEND_SLASH = False
+# CSRF_TRUSTED_ORIGINS = ['https://3449-2409-4050-dc0-2a83-1853-ce36-f980-6c2d.in.ngrok.io']
